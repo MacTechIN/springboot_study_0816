@@ -90,3 +90,13 @@
     1. `import org.springframework.boot.SpringApplication;`
     2. `import org.springframework.boot.autoconfigure.SpringBootApplication;`
   - 코드 정확성 검증: 07단계 소스코드와 100% 매칭 및 컴파일 상태 재확인.
+
+## 11. 08단계 그림(이미지) 세부 분석 결과 (추가 2026-08-16)
+- **08단계 애플리케이션 실행 및 시작 로그 검증 분석**:
+  - 교재 내용: `SpringBootDeveloperApplication.main()` 실행 후 콘솔에서 `Started SpringBootDeveloperApplication in ~ seconds` 로그 출력 및 Tomcat 웹 서버 시작 확인.
+  - 실행 및 구동 검증 결과:
+    - `./gradlew bootRun` 실행
+    - `Tomcat started on port 8080 (http) with context path ''`
+    - `Started SpringBootDeveloperApplication in 2.597 seconds (process running for 3.177)` 검증 완료.
+  - **트러블슈팅 참고 팁 명세**:
+    - IntelliJ IDEA에서 `Process 'command ... bin/java' finished with non-zero exit value 1` 오류 발생 시 `[Settings > Build, Execution, Deployment > Gradle]` 메뉴의 `Build and run using` 및 `Run tests using` 옵션을 `IntelliJ IDEA`로 변경하여 재실행.
