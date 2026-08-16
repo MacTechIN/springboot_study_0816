@@ -32,3 +32,20 @@
   - `dependencies { testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1', testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1' }`
   - `test { useJUnitPlatform() }`
 - **전환 목표**: 위의 기초 그레이들 설정에 스프링부트 3 플러그인(`org.springframework.boot` version `3.2.0`, `io.spring.dependency-management` version `1.1.4`) 및 의존성(`spring-boot-starter-web`, `spring-boot-starter-test`)을 추가하여 완성.
+
+## 4. 02단계 그림(이미지) 세부 분석 결과 (추가 2026-08-16)
+- **02단계 build.gradle 정밀 명세**:
+  1. `plugins` 블록:
+     - `id 'java'`
+     - `id 'org.springframework.boot' version '3.2.0'`
+     - `id 'io.spring.dependency-management' version '1.1.0'` (1.1.0 교재 명세 버전 적용)
+  2. **프로젝트 식별자 정보**:
+     - `group 'me.shinsunyoung'`
+     - `version '1.0'` (교재의 version '1.0' 명세 반영)
+     - `sourceCompatibility = '17'` (Java 17 소스 호환성 지정)
+  3. **저장소 (repositories)**: `mavenCentral()`
+  4. **의존성 (dependencies)**:
+     - `implementation 'org.springframework.boot:spring-boot-starter-web'`
+     - `testImplementation 'org.springframework.boot:spring-boot-starter-test'`
+  5. **테스트 블록 (test)**:
+     - `test { useJUnitPlatform() }`
