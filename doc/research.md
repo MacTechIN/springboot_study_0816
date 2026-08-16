@@ -106,3 +106,21 @@
   - 교재 내용: 웹 브라우저에서 `http://localhost:8080` 접속 시 `Whitelabel Error Page (type=Not Found, status=404)` 출력 확인.
   - 원인 파악: HTTP 요청이 스프링 톰캣 웹서버에 정상 도달하였으나, 뷰(Page) 및 라우팅 매핑 컨트롤러가 아직 작성되지 않아 나타나는 스프링 부트의 정상 404 응답 메커니즘.
   - 사용자 직접 접속 환경 제공: `./gradlew bootRun` 프로세스를 서버 모드로 지속 유지하여 사용자가 브라우저에서 `http://localhost:8080` 접속 테스트를 직접 수행할 수 있도록 준비함.
+
+## 13. 10단계 그림(이미지) 세부 분석 결과 (추가 2026-08-16)
+- **10단계 static/index.html 정적 파일 생성 명세 분석**:
+  - 교재 내용: `src/main/resources` 폴더 우클릭 후 `static/index.html` 파일을 생성하여 `static` 디렉토리와 `index.html`을 동시에 구성.
+  - 경로: `src/main/resources/static/index.html`
+  - 역할: 스프링 부트 기본 정적 리소스 핸들러가 루트 `/` 요청을 처리할 때 반환할 정적 HTML 랜딩 페이지 구비.
+
+## 14. 11단계 그림(이미지) 세부 분석 결과 (추가 2026-08-16)
+- **11단계 index.html 마크업 소스 작성 분석**:
+  - 교재 내용: `index.html` 파일에 기본 HTML5 마크업(`<!DOCTYPE html>`, `<html lang='en'>`, `<head>`, `<body><p>index.html</p></body></html>`) 입력 및 저장.
+  - 소스코드 100% 매칭: 교재의 `lang='en'`, `<p>index.html</p>` 마크업 구조와 완벽히 동일하게 구현/갱신함.
+
+## 15. 12단계 & 13단계 그림(이미지) 세부 분석 결과 (추가 2026-08-16)
+- **12/13단계 서버 재시작 및 index.html 서빙 검증 분석**:
+  - 교재 내용: 스프링 부트 서버를 다시 시작(Rerun)한 후 콘솔에서 `Started SpringBootDeveloperApplication in ~ seconds` 구동을 확인하고 `http://localhost:8080` 에 접속하여 404 오류 대신 `index.html` 페이지 내용(`<p>index.html</p>`)이 브라우저에 정상 출력됨을 확인.
+  - 구동 및 검증 메커니즘:
+    - `./gradlew bootRun` 재가동
+    - HTTP GET `http://localhost:8080` 호출 시 HTTP 200 OK 및 `<p>index.html</p>` 검증.
