@@ -49,3 +49,8 @@
      - `testImplementation 'org.springframework.boot:spring-boot-starter-test'`
   5. **테스트 블록 (test)**:
      - `test { useJUnitPlatform() }`
+
+## 5. 03단계 그림(이미지) 세부 분석 결과 (추가 2026-08-16)
+- **03단계 동기화(Reload) 분석**:
+  - 교재 내용: IntelliJ IDEA 오른쪽 [Gradle] 탭을 눌러 [새로고침(Reload Gradle Project)] 버튼을 클릭하여 임포트를 진행.
+  - 빌드 시스템 대응: CLI/터미널 환경에서는 `./gradlew build --refresh-dependencies` 및 `./gradlew dependencies` 명령을 통해 Gradle 캐시 갱신 및 전체 의존성 동기화를 완전하게 동등하게 수행함.
