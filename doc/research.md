@@ -100,3 +100,9 @@
     - `Started SpringBootDeveloperApplication in 2.597 seconds (process running for 3.177)` 검증 완료.
   - **트러블슈팅 참고 팁 명세**:
     - IntelliJ IDEA에서 `Process 'command ... bin/java' finished with non-zero exit value 1` 오류 발생 시 `[Settings > Build, Execution, Deployment > Gradle]` 메뉴의 `Build and run using` 및 `Run tests using` 옵션을 `IntelliJ IDEA`로 변경하여 재실행.
+
+## 12. 09단계 그림(이미지) 세부 분석 결과 (추가 2026-08-16)
+- **09단계 브라우저 접속 및 Whitelabel Error Page (404) 검증 분석**:
+  - 교재 내용: 웹 브라우저에서 `http://localhost:8080` 접속 시 `Whitelabel Error Page (type=Not Found, status=404)` 출력 확인.
+  - 원인 파악: HTTP 요청이 스프링 톰캣 웹서버에 정상 도달하였으나, 뷰(Page) 및 라우팅 매핑 컨트롤러가 아직 작성되지 않아 나타나는 스프링 부트의 정상 404 응답 메커니즘.
+  - 사용자 직접 접속 환경 제공: `./gradlew bootRun` 프로세스를 서버 모드로 지속 유지하여 사용자가 브라우저에서 `http://localhost:8080` 접속 테스트를 직접 수행할 수 있도록 준비함.
