@@ -59,3 +59,11 @@
 - **04단계 패키지 구조 생성 분석**:
   - 교재 내용: `src/main/java` 아래 기존 패키지 `me.shinsunyoung` 위치에서 [New -> Package]를 통해 스프링부트 메인 패키지(`springbootdeveloper` 또는 하위 도메인 패키지)를 구성하는 단계.
   - 디렉토리 구조 확정: `src/main/java/me/shinsunyoung/springbootdeveloper` 패키지 경로를 정확하게 수립하고 유지 관리함.
+
+## 7. 05단계 그림(이미지) 세부 분석 결과 (추가 2026-08-16)
+- **05단계 패키지명 규칙 명세 분석**:
+  - 교재 명세 규칙: `<그룹_이름>.<프로젝트_이름>`
+  - 적용 패키지명: `me.shinsunyoung.springbootdeveloper`
+  - 대상 디렉토리:
+    - 소스 패키지: `src/main/java/me/shinsunyoung/springbootdeveloper`
+    - 테스트 패키지: `src/test/java/me/shinsunyoung/springbootdeveloper`
