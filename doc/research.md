@@ -74,3 +74,19 @@
   - 적용 클래스명: `SpringBootDeveloperApplication`
   - 대상 위치: `me.shinsunyoung.springbootdeveloper` 패키지 내부 (`src/main/java/me/shinsunyoung/springbootdeveloper/SpringBootDeveloperApplication.java`)
   - 기능 역할: `@SpringBootApplication` 어노테이션을 부착하여 스프링 부트 3 애플리케이션 실행을 전담하는 메인 진입점 역할.
+
+## 9. GitHub 원격 저장소 푸시 분석 (추가 2026-08-16)
+- **원격 저장소 URL**: `https://github.com/MacTechIN/springboot_study_0816.git`
+- **목적**: 커밋된 모든 프로젝트 히스토리(`v1.0.0` ~ `v1.0.5`)를 GitHub 원격 메인 브랜치(`main`)로 푸시.
+- **수행 절차**:
+  1. 원격 저장소 등록: `git remote add origin https://github.com/MacTechIN/springboot_study_0816.git` (기존 origin이 있을 경우 URL 갱신)
+  2. 기본 브랜치 지정: `git branch -M main`
+  3. 원격 푸시: `git push -u origin main`
+
+## 10. 07단계 그림(이미지) 세부 분석 결과 (추가 2026-08-16)
+- **07단계 메인 클래스 코드작성 및 클래스 Import 분석**:
+  - 교재 내용: `SpringBootDeveloperApplication.java`에 `@SpringBootApplication` 및 `SpringApplication.run(...)` 코드를 작성하고, `Alt + Enter` (Import class)를 통해 필수 스프링 프레임워크 패키지를 정확히 임포트함.
+  - 필수 임포트문 파악:
+    1. `import org.springframework.boot.SpringApplication;`
+    2. `import org.springframework.boot.autoconfigure.SpringBootApplication;`
+  - 코드 정확성 검증: 07단계 소스코드와 100% 매칭 및 컴파일 상태 재확인.
