@@ -67,3 +67,10 @@
   - 대상 디렉토리:
     - 소스 패키지: `src/main/java/me/shinsunyoung/springbootdeveloper`
     - 테스트 패키지: `src/test/java/me/shinsunyoung/springbootdeveloper`
+
+## 8. 06단계 그림(이미지) 세부 분석 결과 (추가 2026-08-16)
+- **06단계 메인 클래스 생성 명세 분석**:
+  - 교재 명세 규칙: `<프로젝트_이름><Application>`
+  - 적용 클래스명: `SpringBootDeveloperApplication`
+  - 대상 위치: `me.shinsunyoung.springbootdeveloper` 패키지 내부 (`src/main/java/me/shinsunyoung/springbootdeveloper/SpringBootDeveloperApplication.java`)
+  - 기능 역할: `@SpringBootApplication` 어노테이션을 부착하여 스프링 부트 3 애플리케이션 실행을 전담하는 메인 진입점 역할.
