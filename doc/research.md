@@ -143,3 +143,28 @@
   - 파일 생성 위치:
     - 정적 웹 서빙용: `src/main/resources/static/architecture.html`
     - 프로젝트 문서용: `doc/architecture_guide.html`
+
+## 17. 3장 01단계 TestController 클래스 생성 분석 (추가 2026-08-17)
+- **교재 01단계 명세**:
+  - 위치: `src/main/java/me/shinsunyoung/springbootdeveloper/TestController.java`
+  - 패키지: `me.shinsunyoung.springbootdeveloper`
+  - 기능: 사용자가 `/test` GET 요청을 보낼 때 `"Hello, world!"` 문자열을 반환하는 컨트롤러 구현.
+  - 어노테이션 구성:
+    - `@RestController`: JSON/문자열 직렬화 데이터를 직접 반환하는 컨트롤러 지정
+    - `@GetMapping("/test")`: `/test` URL 라우팅 핸들러 매핑
+  - 클래스 및 메서드 스펙:
+    ```java
+    package me.shinsunyoung.springbootdeveloper;
+
+    import org.springframework.web.bind.annotation.GetMapping;
+    import org.springframework.web.bind.annotation.RestController;
+
+    @RestController
+    public class TestController {
+
+        @GetMapping("/test")
+        public String test() {
+            return "Hello, world!";
+        }
+    }
+    ```
