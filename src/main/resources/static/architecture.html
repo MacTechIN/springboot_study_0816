@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스프링 부트 3 프로젝트 구조 및 아키텍처 설명서 (Section 3.0)</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --primary-light: #eef2ff;
+            --secondary: #0ea5e9;
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --border: #e2e8f0;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+            --radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        header .badge {
+            display: inline-block;
+            background-color: var(--primary-light);
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 14px;
+            padding: 6px 16px;
+            border-radius: 9999px;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        /* Flow Diagram Section */
+        .diagram-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 36px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            margin-bottom: 48px;
+        }
+
+        .diagram-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .diagram-title::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 24px;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+
+        .flow-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            position: relative;
+            align-items: center;
+        }
+
+        .flow-node {
+            background: var(--bg);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .flow-node:hover, .flow-node.active {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .flow-node .step {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--primary);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .flow-node .name {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .flow-arrow {
+            text-align: center;
+            color: var(--primary);
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Detail Section Cards */
+        .section-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 28px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-header h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .card-tag {
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .tag-controller { background: #e0f2fe; color: #0284c7; }
+        .tag-service { background: #dcfce7; color: #15803d; }
+        .tag-repository { background: #fef3c7; color: #b45309; }
+        .tag-database { background: #f3e8ff; color: #7e22ce; }
+        .tag-gradle { background: #ffe4e6; color: #be123c; }
+
+        .card-body p {
+            color: var(--text-muted);
+            font-size: 15px;
+            margin-bottom: 16px;
+        }
+
+        .quote-box {
+            background: var(--bg);
+            border-left: 4px solid var(--primary);
+            padding: 12px 16px;
+            border-radius: 0 8px 8px 0;
+            font-size: 14px;
+            color: var(--text-main);
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        /* Tools / Dependencies Grid */
+        .tools-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 36px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            margin-bottom: 48px;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .tool-item {
+            background: var(--bg);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .tool-item h4 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .tool-item p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* Architecture Rules Callout */
+        .rule-card {
+            background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+            color: #ffffff;
+            border-radius: var(--radius);
+            padding: 32px;
+            box-shadow: var(--shadow);
+        }
+
+        .rule-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .rule-card p {
+            font-size: 15px;
+            opacity: 0.9;
+            margin-bottom: 12px;
+            line-height: 1.7;
+        }
+
+        .rule-card ul {
+            margin-left: 20px;
+            font-size: 15px;
+            opacity: 0.95;
+        }
+
+        .rule-card ul li {
+            margin-bottom: 6px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 48px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <span class="badge">SECTION 3.0 ARCHITECTURE GUIDE</span>
+            <h1>스프링 부트 3 프로젝트 구조 설명서</h1>
+            <p>웹 브라우저의 요청부터 컨트롤러, 서비스, 리포지토리, 데이터베이스로 이어지는 계층형 아키텍처 흐름 및 핵심 도구를 한눈에 이해합니다.</p>
+        </header>
+
+        <!-- Visual Flow Diagram -->
+        <section class="diagram-card">
+            <h2 class="diagram-title">스프링 부트 요청 처리 및 계층 흐름 (Request Processing Flow)</h2>
+            <div class="flow-grid">
+                <div class="flow-node" onclick="highlightLayer('browser')">
+                    <div class="step">Step 1</div>
+                    <div class="name">웹 브라우저<br><small>(HTTP /test)</small></div>
+                </div>
+                <div class="flow-arrow">➔</div>
+                <div class="flow-node" onclick="highlightLayer('controller')">
+                    <div class="step">Step 2</div>
+                    <div class="name">TestController<br><small>(요청 판단 & 분기)</small></div>
+                </div>
+                <div class="flow-arrow">➔</div>
+                <div class="flow-node" onclick="highlightLayer('service')">
+                    <div class="step">Step 3</div>
+                    <div class="name">TestService<br><small>(비즈니스 로직 실행)</small></div>
+                </div>
+                <div class="flow-arrow">➔</div>
+                <div class="flow-node" onclick="highlightLayer('repository')">
+                    <div class="step">Step 4</div>
+                    <div class="name">MemberRepository<br><small>(Member Entity & JPA)</small></div>
+                </div>
+                <div class="flow-arrow">➔</div>
+                <div class="flow-node" onclick="highlightLayer('database')">
+                    <div class="step">Step 5</div>
+                    <div class="name">H2 Database<br><small>(Member 테이블)</small></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Detailed Layers Grid -->
+        <section class="section-grid">
+            <!-- Controller Card -->
+            <div class="card" id="card-controller">
+                <div class="card-header">
+                    <h3>1. TestController 클래스</h3>
+                    <span class="card-tag tag-controller">Controller Layer</span>
+                </div>
+                <div class="card-body">
+                    <div class="quote-box">"TestController 클래스는 외부 요청을 분기하여 적절한 서비스 클래스와 연결하여 작업을 처리하고 값을 다시 반환해요."</div>
+                    <p>웹 브라우저의 HTTP 요청(`/test`)을 가장 먼저 수신합니다. <strong>어떤 요청인지 판단</strong>하고, 실질적인 작업을 실행하기 위해 `TestService` 클래스에 다음 작업을 요청합니다.</p>
+                </div>
+            </div>
+
+            <!-- Service Card -->
+            <div class="card" id="card-service">
+                <div class="card-header">
+                    <h3>2. TestService 클래스</h3>
+                    <span class="card-tag tag-service">Service Layer</span>
+                </div>
+                <div class="card-body">
+                    <div class="quote-box">"TestService 클래스는 데이터베이스 조작이나 비즈니스 로직을 메서드 기반으로 처리해요."</div>
+                    <p>컨트롤러로부터 전달받은 요청을 전달받아 <strong>그 요청에 맞는 작업(비즈니스 로직)을 수행</strong>합니다. 필요한 경우 `MemberRepository`를 호출하여 데이터 조작 및 조회를 진행합니다.</p>
+                </div>
+            </div>
+
+            <!-- Repository & Entity Card -->
+            <div class="card" id="card-repository">
+                <div class="card-header">
+                    <h3>3. Member & MemberRepository</h3>
+                    <span class="card-tag tag-repository">Persistence Layer</span>
+                </div>
+                <div class="card-body">
+                    <div class="quote-box">"Member 클래스로 구현한 클래스를 MemberRepository 인터페이스가 실제 테이블과 매핑합니다 (JPA, 하이버네이트 덕분!)."</div>
+                    <p>`Member` 클래스는 DB 테이블의 자바 객체 표현(Entity)이며, `MemberRepository` 인터페이스는 실제 데이터베이스의 `Member` 테이블(`NAME` 컬럼 등)과 매핑 및 연결되어 데이터 조작을 전담합니다.</p>
+                </div>
+            </div>
+
+            <!-- H2 Database Card -->
+            <div class="card" id="card-database">
+                <div class="card-header">
+                    <h3>4. h2database</h3>
+                    <span class="card-tag tag-database">Database Layer</span>
+                </div>
+                <div class="card-body">
+                    <div class="quote-box">"실질적인 데이터는 h2 데이터베이스에 쌓여요."</div>
+                    <p>애플리케이션 실행 시 메모리에 실질적인 데이터가 저장되는 인메모리(In-Memory) 데이터베이스입니다. 빠르게 개발하고 검증할 수 있는 최적의 환경을 제공합니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- build.gradle Dependencies Section -->
+        <section class="tools-card">
+            <h2 class="diagram-title">build.gradle 핵심 개발 도구 (Dependencies)</h2>
+            <div class="quote-box">"build.gradle에 앱 개발에 필요한 도구를 적으면 알아서 로딩해줘요."</div>
+            <div class="tools-grid">
+                <div class="tool-item">
+                    <h4>JPA (Java Persistence API)</h4>
+                    <p>자바 객체와 데이터베이스 테이블 간의 매핑을 자동화하는 ORM 기술로, 데이터베이스 연결 및 CRUD 구현을 획기적으로 손쉽게 해줍니다.</p>
+                </div>
+                <div class="tool-item">
+                    <h4>Lombok</h4>
+                    <p>자바 클래스 구현 시 반복되는 Getter, Setter, 생성자 코드 등을 어노테이션 기반으로 자동 생성해 주는 구현 도우미 라이브러리입니다.</p>
+                </div>
+                <div class="tool-item">
+                    <h4>H2 Engine</h4>
+                    <p>별도의 DB 설치 없이 애플리케이션 내부에 임베디드하여 테스트할 수 있는 초경량 인메모리 데이터베이스 엔진입니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Development Rule Guidelines -->
+        <section class="rule-card">
+            <h3>⚡ 데이터 조회 및 아키텍처 구현 표준 지침</h3>
+            <p>스프링 부트 애플리케이션 개발 시 데이터베이스 성능 최적화와 계층 분리 원칙을 준수합니다.</p>
+            <ul>
+                <li><strong>인풋 페이징 (Cursor/Input-based Paging) 채택</strong>: 데이터베이스 조회가 수반되는 목록/게시판 구현 시 전통적인 `OFFSET/LIMIT` 대신 커서 식별자 기반의 인풋 페이징을 적용하여 대용량 데이터 성능을 보장합니다.</li>
+                <li><strong>단방향 계층 흐름 준수</strong>: 웹 브라우저 ➔ Controller ➔ Service ➔ Repository ➔ DB 순으로 요청을 전달하고, 반대 순서로 결과를 반환하여 계층 간 결합도를 최적화합니다.</li>
+            </ul>
+        </section>
+
+        <footer>
+            <p>© 2026 SpringBoot Developer Study | Section 3.0 Architecture Guide Document</p>
+        </footer>
+    </div>
+
+    <script>
+        function highlightLayer(layerId) {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.style.borderColor = '#e2e8f0';
+                card.style.boxShadow = '0 10px 25px -5px rgba(0, 0, 0, 0.05)';
+            });
+
+            const targetCard = document.getElementById('card-' + layerId);
+            if (targetCard) {
+                targetCard.style.borderColor = '#4f46e5';
+                targetCard.style.boxShadow = '0 20px 25px -5px rgba(79, 70, 229, 0.2)';
+                targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+    </script>
+</body>
+</html>

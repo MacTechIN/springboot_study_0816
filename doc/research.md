@@ -124,3 +124,22 @@
   - 구동 및 검증 메커니즘:
     - `./gradlew bootRun` 재가동
     - HTTP GET `http://localhost:8080` 호출 시 HTTP 200 OK 및 `<p>index.html</p>` 검증.
+
+## 16. 3.0 단원 스프링 부트 프로젝트 아키텍처 세부 분석 (추가 2026-08-17)
+- **교재 이미지 구성 요소**:
+  1. **Web Browser (웹 브라우저)**: HTTP 요청(`/test`) 전송 및 서버 응답 결과 수신 화면
+  2. **Controller Layer (`TestController`)**: 외부 요청(`/test`)을 수신하여 어떤 요청인지 판단/분기하고 적절한 서비스 클래스(`TestService`)와 연결하여 처리 후 최종 결과 반환
+  3. **Service Layer (`TestService`)**: 데이터베이스 조작이나 핵심 비즈니스 로직을 메서드 단위로 실행
+  4. **Repository Layer (`MemberRepository`) & Entity Layer (`Member`)**:
+     - `Member` 클래스: 데이터베이스 테이블(`Member` 테이블, `NAME` 필드 등)과 대응되는 자바 객체
+     - `MemberRepository` 인터페이스: JPA/Hibernate를 활용하여 `Member` 객체를 실제 DB 테이블과 매핑 및 CRUD 조작
+  5. **Database Layer (`h2database`)**: 애플리케이션 실행 시 메모리에 실질적으로 데이터가 축적되는 인메모리(In-Memory) 데이터베이스
+  6. **Build Dependencies (`build.gradle`)**:
+     - `JPA`: 데이터베이스 연결 및 ORM 구현
+     - `Lombok`: 자바 클래스 메서드(Getter/Setter/Constructor) 자동 생성 도우미
+     - `H2`: 개발/테스트용 인메모리 데이터베이스
+- **HTML 설명서 제작 가이드라인**:
+  - 모던 레퍼런스 스타일 디자인 (Vanilla CSS, 인터랙티브 탭/다이어그램 시각화)
+  - 파일 생성 위치:
+    - 정적 웹 서빙용: `src/main/resources/static/architecture.html`
+    - 프로젝트 문서용: `doc/architecture_guide.html`
